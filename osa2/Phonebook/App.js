@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import RenderPhonebook from './components/RenderPhonebook'
+import Filter from './components/Filter'
+import AddPerson from './components/AddPerson'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -27,8 +30,8 @@ const App = () => {
   
   
   const searchName = (event) => {
-    setSearch(event.target.value.length !== 0)  // jos event target pituus muu kuin 0 niin haku päällä
-    setNewSearch(event.target.value)            // hakusanan asetus
+    setSearch(event.target.value.length !== 0)      // jos event target pituus muu kuin 0 niin haku päällä
+    setNewSearch(event.target.value.toLowerCase())  // hakusanan asetus
   }
 
   const namesToShow = !searchOn
@@ -46,25 +49,13 @@ const App = () => {
   return (
   	<div>
     	<h2>Phonebook</h2>
-      <div>
-				  filter shown with: <input value={searchTerm} onChange={searchName}/>
-      </div>
+      <Filter searchTerm={searchTerm} searchName={searchName} />
       <h2>Add a new</h2>
-    	<form onSubmit={addPerson}>
-        <div>
-				  name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-	  		<div>
-	  			number: <input value={newNumber} onChange={handleNumberChange}/>
-	  		</div>
-        <div>
-				  <button type="submit">add</button>
-        </div>
-      </form>
+      <AddPerson addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
       <h2>Numbers</h2>
       <ul>
         {(namesToShow.map(person =>
-          <li key={person.name}>{person.name} {person.number}</li>
+          <RenderPhonebook key={person.name} name={person.name} number={person.number} />
         ))}
       </ul>
     </div>
