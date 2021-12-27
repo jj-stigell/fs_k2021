@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const api_key = process.env.REACT_APP_API_KEY
+let city = ''
 
 const Filter = ({ searchTerm, searchName }) => {
   return (
@@ -10,7 +12,7 @@ const Filter = ({ searchTerm, searchName }) => {
   )
 }
 
-const RenderCountries = ({ countries, searchTerm, setNewSearch }) => {
+const RenderCountries = ({ countries, searchTerm, setNewSearch, weather }) => {
 
   const filteredCountries = countries.filter(country => country.name.common.toLowerCase().includes(searchTerm))
 
@@ -19,13 +21,19 @@ const RenderCountries = ({ countries, searchTerm, setNewSearch }) => {
       <p>Too many matches, specify another filter</p>
     )
   } else if (filteredCountries.length === 1) {
+    
 
+    //console.log(filteredCountries[0].capital);
+
+    city = filteredCountries[0].capital;
     const obj = filteredCountries[0].languages;
-    const languages = [];
+    let languages = [];
 
     for(var i in obj) {
       languages.push(obj[i]);
     }
+
+    console.log(weather.main.temp);
 
     return (
       <div>
@@ -43,6 +51,11 @@ const RenderCountries = ({ countries, searchTerm, setNewSearch }) => {
 
           <br/>
           <img src={country.flags.png} alt="Flagphoto" />
+          <br/>
+          <h2>Weather in {country.capital}</h2>
+          <p>Temperature: {weather.main.temp} Celcius</p>
+          <p>Humidity: {weather.main.humidity} %</p>
+          <p>wind speed: {weather.wind.speed} m/s</p>
           </div>
         ))}
       </div>
@@ -67,28 +80,36 @@ const RenderCountries = ({ countries, searchTerm, setNewSearch }) => {
 const App = () => {
   const [ countries, setCountries ] = useState([])
   const [ searchTerm, setNewSearch ] = useState('') // mikä sana/kirjain on haussa
+  const [ weather, setWeather ] = useState([])
 
   useEffect(() => {
-    console.log('effect')
+    //console.log('effect')
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        console.log('promise fulfilled')
-        console.log(response.data);
+        //console.log('promise fulfilled')
+        //console.log(response.data);
         setCountries(response.data)
         
       })
   }, [])
 
+  useEffect(() => {
+    axios
+      .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`)
+      .then(response => {
+      setWeather(response.data)
+      })
+  }, [searchTerm])
+
   const searchName = (event) => {
     setNewSearch(event.target.value.toLowerCase())  // hakusanan asetus
-    console.log(countries.length);
   }
 
   return (
   	<div>
       <Filter searchTerm={searchTerm} searchName={searchName} />
-      <RenderCountries countries={countries} searchTerm={searchTerm} setNewSearch={setNewSearch} />
+      <RenderCountries countries={countries} searchTerm={searchTerm} setNewSearch={setNewSearch} weather={weather} />
     </div>
   )
 }
