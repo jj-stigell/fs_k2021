@@ -4,19 +4,13 @@ import axios from 'axios'
 
 const Filter = ({ searchTerm, searchName }) => {
   return (
-      <div>
-      find countries: <input value={searchTerm} onChange={searchName}/>
-      </div>
+    <div>
+    find countries: <input value={searchTerm} onChange={searchName}/>
+    </div>
   )
 }
 
-const Languages = ({ language }) => {
-  return (
-    <li key={language}> {language} </li> 
-  )
-}
-
-const RenderCountries = ({ countries, searchTerm }) => {
+const RenderCountries = ({ countries, searchTerm, setNewSearch }) => {
 
   const filteredCountries = countries.filter(country => country.name.common.toLowerCase().includes(searchTerm))
 
@@ -58,7 +52,12 @@ const RenderCountries = ({ countries, searchTerm }) => {
     return (
       <ul>
         {(filteredCountries.map(country =>
-          <li key={country.name.common}> {country.name.common} </li> 
+          <li key={country.name.common}>
+            {country.name.common} 
+            <form onSubmit={() => setNewSearch(country.name.common.toLowerCase())}>
+              <button type="submit">Show</button>
+            </form>
+          </li> 
         ))}
       </ul>
     )
@@ -66,7 +65,7 @@ const RenderCountries = ({ countries, searchTerm }) => {
 }
 
 const App = () => {
-  const [countries, setCountries] = useState([])
+  const [ countries, setCountries ] = useState([])
   const [ searchTerm, setNewSearch ] = useState('') // mikä sana/kirjain on haussa
 
   useEffect(() => {
@@ -89,7 +88,7 @@ const App = () => {
   return (
   	<div>
       <Filter searchTerm={searchTerm} searchName={searchName} />
-      <RenderCountries countries={countries} searchTerm={searchTerm} />
+      <RenderCountries countries={countries} searchTerm={searchTerm} setNewSearch={setNewSearch} />
     </div>
   )
 }
