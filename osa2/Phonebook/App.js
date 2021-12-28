@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import RenderPhonebook from './components/RenderPhonebook'
 import Filter from './components/Filter'
 import AddPerson from './components/AddPerson'
-import axios from 'axios'
+import contactService from './services/contacts'
 
 const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    contactService
+      .getContacts()
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
@@ -34,8 +34,8 @@ const App = () => {
         number: newNumber
       }
 
-      axios
-        .post('http://localhost:3001/persons', newContact)
+      contactService
+        .addContact(newContact)
         .then(response => {
           setPersons(persons.concat(response.data))
           setNewName('')
