@@ -9,4 +9,8 @@ const addContact = (contactInfo) => {
     return axios.post(baseUrl, contactInfo)
 }
 
-export default { getContacts, addContact }
+const deleteContact = (id) => {
+    return axios.delete(`${baseUrl}/${id}`)
+}
+
+export default { getContacts, addContact, deleteContact }

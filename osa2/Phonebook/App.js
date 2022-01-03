@@ -6,6 +6,10 @@ import contactService from './services/contacts'
 
 const App = () => {
   const [persons, setPersons] = useState([])
+  const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
+  const [ searchTerm, setNewSearch ] = useState('') // mikä sana/kirjain on haussa
+  const [ searchOn, setSearch ] = useState(false)   // onko haku päällä
 
   useEffect(() => {
     console.log('effect')
@@ -17,10 +21,6 @@ const App = () => {
       })
   }, [])
 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-  const [ searchTerm, setNewSearch ] = useState('') // mikä sana/kirjain on haussa
-  const [ searchOn, setSearch ] = useState(false)   // onko haku päällä
  
   const addPerson = (event) => {
     event.preventDefault()
@@ -43,7 +43,13 @@ const App = () => {
         })
     }
   }
-  
+
+  const deletePerson = (event, id) => {
+    console.log("id for deletion: ", id);
+    event.preventDefault()
+    contactService.deleteContact(id)
+    setPersons(persons.filter(person => person.id !== id))
+  }
   
   const searchName = (event) => {
     setSearch(event.target.value.length !== 0)      // jos event target pituus muu kuin 0 niin haku päällä
@@ -71,7 +77,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {(namesToShow.map(person =>
-          <RenderPhonebook key={person.name} name={person.name} number={person.number} />
+          <RenderPhonebook id={person.id} name={person.name} number={person.number} deletePerson={deletePerson} />
         ))}
       </ul>
     </div>
