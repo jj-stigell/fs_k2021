@@ -4,6 +4,30 @@ import Filter from './components/Filter'
 import AddPerson from './components/AddPerson'
 import contactService from './services/contacts'
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='succesful'>
+      {message}
+    </div>
+  )
+}
+
+const ErrorMsg = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='error'>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
@@ -11,7 +35,7 @@ const App = () => {
   const [ searchTerm, setNewSearch ] = useState('') // mikä sana/kirjain on haussa
   const [ searchOn, setSearch ] = useState(false)   // onko haku päällä
   const [errorMessage, setErrorMessage] = useState(null)
-
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -23,19 +47,6 @@ const App = () => {
       })
   }, [])
 
-
-  const Notification = ({ message }) => {
-    if (message === null) {
-      return null
-    }
-  
-    return (
-      <div className='succesful'>
-        {message}
-      </div>
-    )
-  }
- 
   const addPerson = (event) => {
     event.preventDefault()
 
@@ -66,18 +77,27 @@ const App = () => {
           setNewNumber('')
         })
 
-        setErrorMessage(`Added ${newContact.name}`)
+        setSuccessMessage(`Added ${newContact.name}`)
 
         setTimeout(() => {
-          setErrorMessage(null)
+          setSuccessMessage(null)
         }, 5000)
     }
   }
 
-  const deletePerson = (event, id) => {
+  const deletePerson = (event, id, name) => {
     event.preventDefault()
-    contactService.deleteContact(id)
+    contactService.deleteContact(id).catch(error => {
+      setErrorMessage(
+        `Information of '${name}' has already been removed from server`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    })
     setPersons(persons.filter(person => person.id !== id))
+
+    
   }
 
   const searchName = (event) => {
@@ -100,7 +120,8 @@ const App = () => {
   return (
   	<div>
     	<h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={successMessage} />
+      <ErrorMsg message={errorMessage} />
       <Filter searchTerm={searchTerm} searchName={searchName} />
       <h2>Add a new</h2>
       <AddPerson addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
