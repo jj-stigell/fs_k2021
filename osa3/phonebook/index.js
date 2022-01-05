@@ -2,8 +2,10 @@ const { request, response } = require('express');
 const express = require('express')
 const app = express()
 let persons = require('./persons.json');
+const morgan = require('morgan')
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
@@ -60,6 +62,12 @@ app.post('/api/persons', async (request, response) => {
   persons = persons.concat(contactInfo)
   response.json(persons)
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
