@@ -41,6 +41,16 @@ app.post('/api/persons', async (request, response) => {
 
   const body = request.body
 
+  if (!body.name || !body.number) {
+    return response.status(400).json({ 
+      error: 'some content missing' 
+    })
+  } else if ((persons.find(person => person.name === body.name))) {
+    return response.status(400).json({ 
+      error: 'name must be unique' 
+    })
+  }
+
   const contactInfo = {
     id: parseInt(Math.random() * 999999),
     name: body.name,
