@@ -58,14 +58,16 @@ app.post('/api/persons', async (request, response) => {
     })
   }
 
-  const contactInfo = {
-    id: parseInt(Math.random() * 999999),
+  const person = new Person({
     name: body.name,
     number: body.number,
-  }
-
-  persons = persons.concat(contactInfo)
-  response.json(persons)
+  })
+  
+  person.save().then(savedPerson => {
+    Person.find({}).then(persons => {
+      response.json(persons)
+    })
+  })
 })
 
 const unknownEndpoint = (request, response) => {
