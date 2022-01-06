@@ -3,10 +3,12 @@ const express = require('express')
 const app = express()
 let persons = require('./persons.json');
 const morgan = require('morgan')
+const cors = require('cors')
 
 morgan.token('content', function (request, response) { return JSON.stringify(request.body) })
 
 app.use(express.json())
+app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
 app.get('/api/persons', (request, response) => {
