@@ -44,14 +44,15 @@ app.get('/api/persons/:id', (request, response, next) => {
 })
 
 app.get('/info', (request, response) => {
-
-  const time = Date();
-  const amount = Object.keys(persons).length;
-  response.send(`
-    <p>Phonebook has info for ${amount} people.</p>
-    <br>
-    <p>${time}</p>
-  `)
+  Person.find({}).then(persons => {
+    const time = Date();
+    const amount = Object.keys(persons).length;
+    response.send(`
+      <p>Phonebook has info for ${amount} people.</p>
+      <br>
+      <p>${time}</p>
+    `)
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
@@ -88,7 +89,6 @@ app.post('/api/persons', async (request, response) => {
   })
 })
 
-
 app.put('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndUpdate(request.params.id, request.body, { new: true })
     .then(updatedPerson => {
@@ -97,8 +97,6 @@ app.put('/api/persons/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
-
-
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
