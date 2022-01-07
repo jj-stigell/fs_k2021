@@ -1,2 +1,2 @@
-# fullstack_kurssi_2021
-Full Stack open 2021 kurssi tehtävät
+# fullstack_kurssi_2022
+Full Stack open 2022 kurssi tehtävät
