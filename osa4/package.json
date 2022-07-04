@@ -8,6 +8,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "jest": "^28.1.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
