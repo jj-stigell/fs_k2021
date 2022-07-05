@@ -1,40 +1,47 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const Blog = require('../models/blog')
+const helper = require('./blog_helper')
 const app = require('../app')
 const api = supertest(app)
-
-const initialBlogs = [
-    {
-      title: 'Why I never draw Mickey Mouse cartoons',
-      author: 'Carl Barks',
-      url: "www.disney.com",
-      likes: 15,
-    },
-    {
-      title: 'Why I hate mondays',
-      author: 'Garfield',
-      url: "www.cats.com",
-      likes: 353,
-    },
-]
   
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let noteObject = new Blog(initialBlogs[0])
+  let noteObject = new Blog(helper.initialBlogs[0])
   await noteObject.save()
-  noteObject = new Blog(initialBlogs[1])
+  noteObject = new Blog(helper.initialBlogs[1])
   await noteObject.save()
 }, 100000)
 
 test('Blogs have correct length', async () => {
   const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(initialBlogs.length)
+  expect(response.body).toHaveLength(helper.initialBlogs.length)
 }, 100000)
 
 test('Blogs have id', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body[0]._id).toBeDefined()
+}, 100000)
+
+test('Creates a new blog entry succesfully', async () => {
+
+  const initialBlogs = {
+    title: 'I am too tired',
+    author: 'Wage Slave',
+    url: "www.ratrace.com",
+    likes: 753,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(initialBlogs)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+  expect(blogsAtEnd[2].title).toEqual(initialBlogs.title)
+
 }, 100000)
 
 afterAll(() => {
