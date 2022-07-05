@@ -29,7 +29,12 @@ beforeEach(async () => {
 
 test('Blogs have correct length', async () => {
   const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(2)
+  expect(response.body).toHaveLength(initialBlogs.length)
+}, 100000)
+
+test('Blogs have id', async () => {
+  const response = await api.get('/api/blogs')
+  expect(response.body[0]._id).toBeDefined()
 }, 100000)
 
 afterAll(() => {
