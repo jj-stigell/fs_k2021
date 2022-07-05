@@ -11,7 +11,9 @@ blogsRouter.get('/', (request, response) => {
   })
   
 blogsRouter.post('/', (request, response) => {
-    const blog = new Blog(request.body)
+    const newBlog = request.body
+    newBlog.likes = newBlog.likes ? newBlog.likes : 0
+    const blog = new Blog(newBlog)
 
     blog
         .save()
