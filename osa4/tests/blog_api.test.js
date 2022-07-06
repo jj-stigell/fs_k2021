@@ -24,27 +24,6 @@ test('Blogs have id', async () => {
 }, 100000)
 
 test('Creates a new blog entry succesfully', async () => {
-
-  const initialBlogs = {
-    title: 'I am too tired',
-    author: 'Wage Slave',
-    url: "www.ratrace.com",
-    likes: 753,
-  }
-
-  await api
-    .post('/api/blogs')
-    .send(initialBlogs)
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
-
-  const blogsAtEnd = await helper.blogsInDb()
-  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
-  expect(blogsAtEnd[2].title).toEqual(initialBlogs.title)
-
-}, 100000)
-
-test('Creates a new blog entry succesfully', async () => {
   await api
     .post('/api/blogs')
     .send(helper.newBlog)
@@ -77,6 +56,20 @@ test('blog without title and/or url is not added', async () => {
 
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete._id}`)
+    .expect(204)  // 204 No Content
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+  const allIds = blogsAtEnd.map(r => r._id)
+  expect(allIds).not.toContain(blogToDelete._id)
 })
 
 afterAll(() => {
