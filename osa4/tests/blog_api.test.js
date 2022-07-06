@@ -72,6 +72,20 @@ test('a blog can be deleted', async () => {
   expect(allIds).not.toContain(blogToDelete._id)
 })
 
+test('a blog can be edited', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToEdit = blogsAtStart[0]
+
+  await api
+    .put(`/api/blogs/${blogToEdit._id}`)
+    .send(helper.newBlog)
+    .expect(200)  // 200 OK
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
+  expect(blogsAtEnd[0].title).toMatch(helper.newBlog.title)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
