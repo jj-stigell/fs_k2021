@@ -9,7 +9,7 @@ usersRouter.post('/', async (request, response, next) => {
             error: 'username and/or password must be at least 3 characters'
         })
     }
-    
+
     const existingUser = await User.findOne({ username })
     if (existingUser) {
       return response.status(400).json({
@@ -35,7 +35,7 @@ usersRouter.post('/', async (request, response, next) => {
 
 usersRouter.get('/', async (request, response, next) => {
     try {
-        const users = await User.find({})
+        const users = await User.find({}).populate('blogs', { url: 1, title: 1, author: 1 })
         response.json(users)
     } catch (exception) {
         next(exception)
