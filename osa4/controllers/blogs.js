@@ -13,8 +13,10 @@ blogsRouter.get('/', async (request, response, next) => {
 })
 
 blogsRouter.post('/', async (request, response, next) => {
+
+    if (!request.user) { return response.status(401) }
+
     try {
-        const decodedToken = jwt.verify(request.token, process.env.SECRET)
         const user = request.user
         const newBlog = request.body
 
@@ -38,7 +40,6 @@ blogsRouter.post('/', async (request, response, next) => {
 
 blogsRouter.delete('/:id', async (request, response, next) => {
     try {
-        const decodedToken = jwt.verify(request.token, process.env.SECRET)
         const user = request.user
         const blog = await Blog.findById(request.params.id)
 
