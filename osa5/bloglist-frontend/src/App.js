@@ -11,6 +11,9 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -23,6 +26,7 @@ const App = () => {
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -63,6 +67,57 @@ const App = () => {
     </div>
   )
 
+  const addNewBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    }
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(returnedBlog)
+        setNewTitle('')
+        setNewAuthor('')
+        setNewUrl('')
+      })
+  }
+
+  const handleTitleChange = (event) => {
+    setNewTitle(event.target.value)
+  }
+
+  const handleAuthorChange = (event) => {
+    setNewAuthor(event.target.value)
+  }
+
+  const handleUrlChange = (event) => {
+    setNewUrl(event.target.value)
+  }
+
+  const blogForm = () => (
+    <form onSubmit={addNewBlog}>
+      <label>Title</label>
+      <input
+        value={newTitle}
+        onChange={handleTitleChange}
+      />
+      <label>Author</label>
+      <input
+        value={newAuthor}
+        onChange={handleAuthorChange}
+      />
+      <label>Url</label>
+      <input
+        value={newUrl}
+        onChange={handleUrlChange}
+      />
+      <button type="submit">save</button>
+    </form>  
+  )
+
   return (
     <div>
       <Notification message={errorMessage} />
@@ -71,6 +126,7 @@ const App = () => {
         <div>
           <p>{user.username} logged-in</p>
           <button onClick={handleLogout}>Log out</button>
+          {blogForm()}
           {showBlogs()}
         </div>
       }
