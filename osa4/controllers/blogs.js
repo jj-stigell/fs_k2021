@@ -20,8 +20,22 @@ blogsRouter.post('/', async (request, response, next) => {
         const user = request.user
         const newBlog = request.body
 
-        if (!newBlog.title || !newBlog.url) {
-            return response.status(400).end()   // 400 Bad Request
+        if (!newBlog.title && !newBlog.url) {
+            return response.status(400).json({ 
+                error: 'title and url missing' 
+            })  // 400 Bad Request
+        }
+
+        if (!newBlog.url) {
+            return response.status(400).json({ 
+                error: 'url is missing' 
+            })  // 400 Bad Request
+        }
+
+        if (!newBlog.title) {
+            return response.status(400).json({ 
+                error: 'title is missing' 
+            })  // 400 Bad Request
         }
 
         newBlog.likes = newBlog.likes ? newBlog.likes : 0

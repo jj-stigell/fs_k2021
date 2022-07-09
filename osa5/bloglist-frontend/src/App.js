@@ -10,7 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
@@ -46,9 +46,9 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      notifyWith(exception.response.data.error, 'error')
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotificationMessage(null)
       }, 5000)
     }
   }
@@ -56,6 +56,13 @@ const App = () => {
   const handleLogout = async () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
+  }
+
+  const notifyWith = (message, type) => {
+    setNotificationMessage({ message, type })
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
   }
 
   const showBlogs = () => (
@@ -74,15 +81,25 @@ const App = () => {
       author: newAuthor,
       url: newUrl
     }
-
     blogService
-      .create(blogObject)
-      .then(returnedBlog => {
+    .create(blogObject)
+    .then(returnedBlog => {
+      if (returnedBlog.error) {
+        notifyWith(returnedBlog.error, 'error')
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      } else {
         setBlogs(returnedBlog)
+        notifyWith(`a new blog '${newTitle}' by ${newAuthor} added`, 'success')
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
         setNewTitle('')
         setNewAuthor('')
         setNewUrl('')
-      })
+      }
+    })
   }
 
   const handleTitleChange = (event) => {
@@ -99,6 +116,7 @@ const App = () => {
 
   const blogForm = () => (
     <form onSubmit={addNewBlog}>
+      <h2>Add new blog</h2>
       <label>Title</label>
       <input
         value={newTitle}
@@ -120,7 +138,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification notification={notificationMessage} />
       {user === null ?
         <LoginForm handleLogin={handleLogin} username={username} password={password} setUsername={setUsername} setPassword={setPassword} /> :
         <div>
