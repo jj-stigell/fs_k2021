@@ -26,7 +26,7 @@ loginRouter.post('/', async (request, response) => {
   response
     .status(200)
     .setHeader('authorization', `Bearer ${token}`)
-    .send({ token, username: user.username, name: user.name })
+    .send({ token, username: user.username, name: user.name, id: user.id })
 })
 
 module.exports = loginRouter

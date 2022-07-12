@@ -56,6 +56,26 @@ const App = () => {
     }
   }
 
+  const addLike = async (blogObject) => {
+    try {
+      const res = await blogService.update(blogObject)
+      blogs.forEach(element => {
+        if (element._id === blogObject.id) {
+          element.likes = res.likes
+        }
+      })
+      notifyWith(`Like added to blog title '${res.title}'`, 'success')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    } catch (exception) {
+      notifyWith(exception.response.data.error, 'error')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    }
+  }
+
   const handleLogout = async () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
@@ -72,7 +92,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog._id} blog={blog} />
+        <Blog key={blog._id} blog={blog} addLike={addLike} user={user}/>
       )}
     </div>
   )

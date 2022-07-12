@@ -1,12 +1,25 @@
 import { useState } from "react"
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, addLike, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5
+  }
+
+
+  const addNewLike = (event) => {
+    event.preventDefault()
+    addLike({
+      user: user.id,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url,
+      id: blog._id
+    })
   }
 
   const [detailsVisible, setVisibility] = useState(false)
@@ -22,7 +35,7 @@ const Blog = ({ blog }) => {
         <b>Id:</b> {blog._id}
         <b>Likes:</b> {blog.likes}
         <button onClick={() => setVisibility(false)}>hide</button>
-        <button>like</button>
+        <button onClick={addNewLike}>like</button>
       </div>
       <div style={hideWhenVisible}>
         <button onClick={() => setVisibility(true)}>view</button>
