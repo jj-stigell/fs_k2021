@@ -31,10 +31,10 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
   const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   return (
-    <div style={blogStyle} key={blog._id}>
+    <div style={blogStyle} key={blog._id} className='blog'>
       <b>Title:</b> {blog.title}
-      <div style={showWhenVisible}>
-        <b>Author:</b> {blog.author}
+      <b>Author:</b> {blog.author}
+      <div style={showWhenVisible} className='hiddenFirst'>
         <b>Url:</b> {blog.url}
         <b>Id:</b> {blog._id}
         <b>Likes:</b> {blog.likes}
