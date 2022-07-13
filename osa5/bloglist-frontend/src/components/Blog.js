@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, addLike, user }) => {
+const Blog = ({ blog, addLike, user, deleteBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -8,7 +8,6 @@ const Blog = ({ blog, addLike, user }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-
 
   const addNewLike = (event) => {
     event.preventDefault()
@@ -20,6 +19,11 @@ const Blog = ({ blog, addLike, user }) => {
       url: blog.url,
       id: blog._id
     })
+  }
+
+  const deleteExistingBlog = (event) => {
+    event.preventDefault()
+    deleteBlog(blog._id)
   }
 
   const [detailsVisible, setVisibility] = useState(false)
@@ -36,6 +40,13 @@ const Blog = ({ blog, addLike, user }) => {
         <b>Likes:</b> {blog.likes}
         <button onClick={() => setVisibility(false)}>hide</button>
         <button onClick={addNewLike}>like</button>
+        <form onSubmit={(event) => {
+          if(window.confirm(`Delete ${blog.title}`)) {
+            deleteExistingBlog(event)
+          }
+        }}>
+          <button type="submit">Delete</button>
+        </form>
       </div>
       <div style={hideWhenVisible}>
         <button onClick={() => setVisibility(true)}>view</button>

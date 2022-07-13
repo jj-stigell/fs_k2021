@@ -64,6 +64,9 @@ const App = () => {
           element.likes = res.likes
         }
       })
+      blogs.sort(function (a, b) {
+        return a.likes - b.likes;
+      });
       notifyWith(`Like added to blog title '${res.title}'`, 'success')
       setTimeout(() => {
         setNotificationMessage(null)
@@ -73,6 +76,15 @@ const App = () => {
       setTimeout(() => {
         setNotificationMessage(null)
       }, 5000)
+    }
+  }
+
+  const deleteBlog = async (id) => {
+    console.log("deletissa")
+    try {
+      const res = await blogService.deleteBlog(id)
+    } catch (exception) {
+
     }
   }
 
@@ -92,7 +104,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog._id} blog={blog} addLike={addLike} user={user}/>
+        <Blog key={blog._id} blog={blog} addLike={addLike} user={user} deleteBlog={deleteBlog}/>
       )}
     </div>
   )

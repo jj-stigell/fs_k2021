@@ -53,6 +53,7 @@ blogsRouter.post('/', async (request, response, next) => {
 })
 
 blogsRouter.delete('/:id', async (request, response, next) => {
+
     try {
         const user = request.user
         const blog = await Blog.findById(request.params.id)
@@ -71,7 +72,6 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 })
 
 blogsRouter.put('/:id', async (request, response, next) => {
-    console.log("putissaaaaa!!!")
     const body = request.body
     const blog = {
         title: body.title,
