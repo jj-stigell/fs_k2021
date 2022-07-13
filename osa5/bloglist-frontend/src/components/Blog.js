@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, addLike, user, deleteBlog }) => {
   const blogStyle = {
@@ -28,11 +28,11 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
 
   const [detailsVisible, setVisibility] = useState(false)
   const hideWhenVisible = { display: detailsVisible ? 'none' : '' }
-  const showWhenVisible = { display: detailsVisible ? '' : 'none' } 
+  const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   return (
     <div style={blogStyle} key={blog._id}>
-      <b>Title:</b> {blog.title} 
+      <b>Title:</b> {blog.title}
       <div style={showWhenVisible}>
         <b>Author:</b> {blog.author}
         <b>Url:</b> {blog.url}

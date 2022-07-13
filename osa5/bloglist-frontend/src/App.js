@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -65,8 +65,8 @@ const App = () => {
         }
       })
       blogs.sort(function (a, b) {
-        return a.likes - b.likes;
-      });
+        return a.likes - b.likes
+      })
       notifyWith(`Like added to blog title '${res.title}'`, 'success')
       setTimeout(() => {
         setNotificationMessage(null)
@@ -80,11 +80,10 @@ const App = () => {
   }
 
   const deleteBlog = async (id) => {
-    console.log("deletissa")
     try {
-      const res = await blogService.deleteBlog(id)
+      await blogService.deleteBlog(id)
     } catch (exception) {
-
+      console.log(exception)
     }
   }
 
@@ -117,25 +116,25 @@ const App = () => {
       url: newUrl
     }
     blogService
-    .create(blogObject)
-    .then(returnedBlog => {
-      if (returnedBlog.error) {
-        notifyWith(returnedBlog.error, 'error')
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-      } else {
-        blogFormRef.current.toggleVisibility()
-        setBlogs(returnedBlog)
-        notifyWith(`a new blog '${newTitle}' by ${newAuthor} added`, 'success')
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
-      }
-    })
+      .create(blogObject)
+      .then(returnedBlog => {
+        if (returnedBlog.error) {
+          notifyWith(returnedBlog.error, 'error')
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+        } else {
+          blogFormRef.current.toggleVisibility()
+          setBlogs(returnedBlog)
+          notifyWith(`a new blog '${newTitle}' by ${newAuthor} added`, 'success')
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+          setNewTitle('')
+          setNewAuthor('')
+          setNewUrl('')
+        }
+      })
   }
 
   return (

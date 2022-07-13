@@ -28,7 +28,7 @@ const BlogForm = ({
         onChange={handleUrlChange}
       />
       <button type="submit">save</button>
-    </form>  
+    </form>
   )
 }
 
