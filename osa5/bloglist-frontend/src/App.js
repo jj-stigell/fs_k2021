@@ -13,9 +13,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -108,13 +105,7 @@ const App = () => {
     </div>
   )
 
-  const addNewBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
+  const addNewBlog = (blogObject) => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
@@ -126,13 +117,10 @@ const App = () => {
         } else {
           blogFormRef.current.toggleVisibility()
           setBlogs(returnedBlog)
-          notifyWith(`a new blog '${newTitle}' by ${newAuthor} added`, 'success')
+          notifyWith(`a new blog '${blogObject.title}' by ${blogObject.author} added`, 'success')
           setTimeout(() => {
             setNotificationMessage(null)
           }, 5000)
-          setNewTitle('')
-          setNewAuthor('')
-          setNewUrl('')
         }
       })
   }
@@ -146,15 +134,7 @@ const App = () => {
           <p>{user.username} logged-in</p>
           <button onClick={handleLogout}>Log out</button>
           <Togglable buttonLabel='add blog' ref={blogFormRef}>
-            <BlogFrom
-              addNewBlog={addNewBlog}
-              newTitle={newTitle}
-              newAuthor={newAuthor}
-              newUrl={newUrl}
-              handleTitleChange={({ target }) => setNewTitle(target.value)}
-              handleAuthorChange={({ target }) => setNewAuthor(target.value)}
-              handleUrlChange={({ target }) => setNewUrl(target.value)}
-            />
+            <BlogFrom addNewBlog={addNewBlog} />
           </Togglable>
           {showBlogs()}
         </div>
