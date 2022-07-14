@@ -32,4 +32,33 @@ describe('Blog app', function() {
       cy.contains('invalid username or password')
     })
   })
+
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.request('POST', 'http://localhost:3003/api/login', {
+        username: 'user123', password: 'pass123'
+      }).then(response => {
+        localStorage.setItem('loggedUser', JSON.stringify(response.body))
+        cy.visit('http://localhost:3000')
+      })
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('add blog').click()
+      cy.get('#titleName').type('cypress test')
+      cy.get('#authorName').type('the tester Man')
+      cy.get('#blogUrl').type('https://www.google.fi')
+      cy.contains('save').click()
+
+      cy.contains('cypress test')
+      cy.contains('the tester Man')
+      cy.contains('view').click()
+      cy.contains('https://www.google.fi')
+    })
+  })
+
+
+
+
 })
