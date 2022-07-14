@@ -56,6 +56,21 @@ describe('Blog app', function() {
       cy.contains('view').click()
       cy.contains('https://www.google.fi')
     })
+
+    it('A blog can be liked', function() {
+      cy.contains('add blog').click()
+      cy.get('#titleName').type('cypress test')
+      cy.get('#authorName').type('the tester Man')
+      cy.get('#blogUrl').type('https://www.google.fi')
+      cy.contains('save').click()
+      cy.contains('view').click()
+      cy.get('.likes').contains('Likes: 0')
+      cy.contains('like').click()
+      cy.get('.likes').contains('Likes: 1')
+    })
+
+
+
   })
 
 

@@ -37,7 +37,9 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
       <div style={showWhenVisible} className='hiddenFirst'>
         <b>Url:</b> {blog.url}
         <b>Id:</b> {blog._id}
-        <b>Likes:</b> {blog.likes}
+        <span className="likes">
+          <b>Likes:</b> {blog.likes}
+        </span>
         <button onClick={() => setVisibility(false)}>hide</button>
         <button onClick={addNewLike}>like</button>
         <form onSubmit={(event) => {
