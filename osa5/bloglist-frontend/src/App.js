@@ -62,7 +62,7 @@ const App = () => {
         }
       })
       blogs.sort(function (a, b) {
-        return a.likes - b.likes
+        return b.likes - a.likes
       })
       notifyWith(`Like added to blog title '${res.title}'`, 'success')
       setTimeout(() => {
@@ -99,9 +99,11 @@ const App = () => {
   const showBlogs = () => (
     <div>
       <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog._id} blog={blog} addLike={addLike} user={user} deleteBlog={deleteBlog}/>
-      )}
+      <ul className='blogList'>
+        {blogs.map(blog =>
+          <Blog key={blog._id} blog={blog} addLike={addLike} user={user} deleteBlog={deleteBlog}/>
+        )}
+      </ul>
     </div>
   )
 

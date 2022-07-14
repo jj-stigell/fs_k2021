@@ -31,7 +31,7 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
   const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   return (
-    <div style={blogStyle} key={blog._id} className='blog'>
+    <li style={blogStyle} key={blog._id} className='blog'>
       <b>Title:</b> {blog.title}
       <b>Author:</b> {blog.author}
       <div style={showWhenVisible} className='hiddenFirst'>
@@ -40,8 +40,8 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
         <span className="likes">
           <b>Likes:</b> {blog.likes}
         </span>
-        <button onClick={() => setVisibility(false)}>hide</button>
-        <button onClick={addNewLike}>like</button>
+        <button className="hideButton" onClick={() => setVisibility(false)}>hide</button>
+        <button className="likeButton" onClick={addNewLike}>like</button>
         <form onSubmit={(event) => {
           if(window.confirm(`Delete ${blog.title}`)) {
             deleteExistingBlog(event)
@@ -51,9 +51,9 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
         </form>
       </div>
       <div style={hideWhenVisible}>
-        <button onClick={() => setVisibility(true)}>view</button>
+        <button className="viewButton" onClick={() => setVisibility(true)}>view</button>
       </div>
-    </div>
+    </li>
   )
 }
 
