@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = ['this is the initial value']
+const initialState = null
 
 const notificationSlice = createSlice({
   name: 'notifications',
@@ -8,7 +8,8 @@ const notificationSlice = createSlice({
   reducers: {
     createNotification(state, action) {
       const content = action.payload
-      state.push({ content })
+      state = content
+      return state
     }
   },
 })
