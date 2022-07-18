@@ -12,4 +12,10 @@ const addNew = async (anecdote) => {
   return response.data
 }
 
-export { getAll, addNew }
+const addVote = async (id, information) => {
+  const url = `${baseUrl}/${id}`
+  const response = await axios.put(url, information)
+  return response.data
+}
+
+export { getAll, addNew, addVote }

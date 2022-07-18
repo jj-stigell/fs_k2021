@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAll, addNew } from '../services/anecdotes'
+import { getAll, addNew, addVote } from '../services/anecdotes'
 
 const anecdotesAtStart = []
 
@@ -32,11 +32,10 @@ const anecdoteSlice = createSlice({
       const unSorted = state.map(anecdote =>
         anecdote.id !== id ? anecdote : changedAnecdote 
       )
-      const sorted = unSorted.sort((a, b) => b.votes - a.votes)
-      return sorted
+      return unSorted.sort((a, b) => b.votes - a.votes)
     },
     setAnecdotes(state, action) {
-      return action.payload
+      return action.payload.sort((a, b) => b.votes - a.votes)
     }
   },
 })
@@ -54,6 +53,13 @@ export const addNewAnecdote = content => {
   return async dispatch => {
     const anecdote = await addNew(content)
     dispatch(addAnecdote(anecdote))
+  }
+}
+
+export const addNewVote = (id, content) => {
+  return async dispatch => {
+    const anecdote = await addVote(id, content)
+    dispatch(voteAnecdote(anecdote.id))
   }
 }
 
