@@ -4,12 +4,15 @@ import { createNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
 
-  const anecdotes = useSelector(state => state.anecdotes)
+  const filter = useSelector(state => state.filter)
+  const anecdotes = useSelector(state => {
+    return state.anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter))
+  })
   const dispatch = useDispatch()
 
-  const addVote = (id) => {
+  const addVote = (id, content) => {
     dispatch(voteAnecdote(id))
-    dispatch(createNotification(`voted anecdote with an id: ${id}`))
+    dispatch(createNotification(`you voted '${content}'`))
     setTimeout(() => {
       dispatch(createNotification(null))
     }, 5000)
@@ -24,7 +27,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => addVote(anecdote.id)}>vote</button>
+            <button onClick={() => addVote(anecdote.id, anecdote.content)}>vote</button>
           </div>
         </div>
       )}
