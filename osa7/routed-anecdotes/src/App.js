@@ -88,6 +88,13 @@ const CreateNew = ({ addNew }) => {
     navigate('/')
   }
 
+  const reset = (e) => {
+    e.preventDefault()
+    content.resetValue()
+    author.resetValue()
+    info.resetValue()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -118,6 +125,7 @@ const CreateNew = ({ addNew }) => {
         </div>
         <button>create</button>
       </form>
+      <button onClick={reset}>reset</button>
     </div>
   )
 }
