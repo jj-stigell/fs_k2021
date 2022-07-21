@@ -30,4 +30,5 @@ const remove = (id) => {
   return axios.delete(`${baseUrl}/${id}`, config());
 };
 
-export default { getAll, create, update, remove };
+const services = { getAll, create, update, remove };
+export default services;

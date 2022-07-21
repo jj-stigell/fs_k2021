@@ -3,9 +3,10 @@ import { addNewLike, delBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Blog from "./Blog";
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
   const dispatch = useDispatch()
   const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
   
   const likeBlog = (blog) => {
     const updatedBlog = {

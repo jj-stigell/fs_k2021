@@ -25,9 +25,5 @@ const clearUser = () => {
 
 const getToken = () => token;
 
-export default {
-  setUser,
-  getUser,
-  clearUser,
-  getToken,
-};
+const services = { setUser, getUser, clearUser, getToken };
+export default services;
