@@ -13,10 +13,10 @@ const BlogDetails = ({ blog, visible, likeBlog, removeBlog, own }) => {
       </div>
       <div>
         {blog.likes} likes{" "}
-        <button onClick={() => likeBlog(blog.id)}>like</button>
+        <button onClick={() => likeBlog(blog)}>like</button>
       </div>
       {addedBy}
-      {own && <button onClick={() => removeBlog(blog.id)}>remove</button>}
+      {own && <button onClick={() => removeBlog(blog)}>remove</button>}
     </div>
   );
 };
