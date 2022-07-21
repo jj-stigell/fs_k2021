@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom"
+import { useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import { addNewLike, delBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useNavigate } from 'react-router-dom'
+import blogService from '../services/blogs'
 
 const Blog = () => {
   const dispatch = useDispatch();
