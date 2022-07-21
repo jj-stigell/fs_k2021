@@ -1,43 +1,22 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { addNewLike, delBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
-import Blog from "./Blog";
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const BlogList = () => {
-  const dispatch = useDispatch()
   const blogs = useSelector(state => state.blogs)
-  const user = useSelector(state => state.user)
-  
-  const likeBlog = (blog) => {
-    const updatedBlog = {
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1
-    }
-    dispatch(addNewLike(blog.id, updatedBlog))
-    dispatch(setNotification(`you liked '${updatedBlog.title}' by ${updatedBlog.author}`, 5));
-  };
 
-  const removeBlog = (blog) => {
-    const ok = window.confirm(`remove '${blog.title}' by ${blog.author}?`);
-    if (!ok) {
-      return
-    }
-    dispatch(delBlog(blog.id))
-    dispatch(setNotification(`removed '${blog.title}' by ${blog.author}`))
+  const style = {
+    padding: 3,
+    margin: 5,
+    borderStyle: "solid",
+    borderWidth: 1,
   };
 
   return (
     <div id="blogs">
       {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          likeBlog={likeBlog}
-          removeBlog={removeBlog}
-          user={user}
-        />
+        <div style={style} key={blog.id}>
+          <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+        </div>
       ))}
     </div>
   )
