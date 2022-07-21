@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux'
-import { addNewBlog } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
+import { useDispatch } from 'react-redux';
+import { addNewBlog } from '../reducers/blogReducer';
+import { setNotification } from '../reducers/notificationReducer';
+import { initializeUsers } from '../reducers/usersReducer';
 
 const NewBlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,14 +20,15 @@ const NewBlogForm = ({ blogFormRef }) => {
     }
 
     try {
-      dispatch(addNewBlog(createdBlog))
-      dispatch(setNotification(`a new blog '${createdBlog.title}' by ${createdBlog.author} added`, 5))
+      dispatch(addNewBlog(createdBlog));
+      dispatch(setNotification(`a new blog '${createdBlog.title}' by ${createdBlog.author} added`, 5));
       blogFormRef.current.toggleVisibility();
       setAuthor("");
       setTitle("");
       setUrl("");
+      dispatch(initializeUsers())
     } catch (error) {
-      dispatch(setNotification("creating a blog failed: " + error.response.data.error, 5))
+      dispatch(setNotification("creating a blog failed: " + error.response.data.error, 5));
     }
   };
 
