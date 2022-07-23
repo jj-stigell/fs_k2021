@@ -1,0 +1,15 @@
+{
+  "name": "graphql-harkka",
+  "version": "1.0.0",
+  "description": "full stack harjoitus osa 8",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "js",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.10.0",
+    "graphql": "^16.5.0"
+  }
+}
