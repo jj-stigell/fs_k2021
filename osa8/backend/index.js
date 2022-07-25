@@ -89,21 +89,38 @@ const resolvers = {
     addBook: async (root, args) => {
       const author = await Author.findOne({ name: args.author })
       if (author) {
-        const book = new Book({ ...args, author: author._id })
-        return (await book.save()).populate('author')
+        try {
+          const book = new Book({ ...args, author: author._id })
+          return (await book.save()).populate('author')
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
       } else {
-        const newAuthor = new Author({ name: args.author, born: null })
-        newAuthor.save()
-        const book = new Book({ ...args, author: newAuthor._id })
-        return (await book.save()).populate('author')
+        try {
+          const newAuthor = new Author({ name: args.author, born: null })
+          newAuthor.save()
+          const book = new Book({ ...args, author: newAuthor._id })
+          return (await book.save()).populate('author')
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
       }
     },
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
       if (author) {
-        console.log("found")
         author.born = args.setBornTo
-        return author.save()
+        try {
+          return author.save()
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
       } else {
         return null
       }
