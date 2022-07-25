@@ -52,24 +52,38 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
-    allBooks: (root, args) => {
+    bookCount: async () => {
+      const books = await Book.find({})
+      return books.length
+    },
+    authorCount: async () => {
+      const authors = await Author.find({})
+      return authors.length
+    },
+    allBooks: async (root, args) => {
       if (args.author && args.genre) {
-        const listAuth = books.filter(book => book.author === args.author)
-        return listAuth.filter(book => book.genres.includes(args.genre))
+        const author = await Author.findOne({ name: args.author })
+        const booksFound = await Book.find({ author: author._id })
+        return booksFound.filter(book => book.genres.includes(args.genre))
       } else if (args.author) {
-        return books.filter(book => book.author === args.author)
+        const author = await Author.findOne({ name: args.author })
+        const books = await Book.find({ author: author._id })
+        return books
       } else if (args.genre) {
+        const books = await Book.find({})
         return books.filter(book => book.genres.includes(args.genre))
       } else {
+        const books = await Book.find({})
         return books
       }
     },
-    allAuthors: () => authors,
+    allAuthors: async () => {return await Author.find({})},
   },
   Author: {
-    bookCount: (root) => books.filter(book => book.author === root.name).length
+    bookCount: async (root) => {
+      const author = await Author.findOne({ name: root.name })
+      return (await Book.find({ author: author._id })).length
+    }
   },
   Mutation: {
     addBook: async (root, args) => {
