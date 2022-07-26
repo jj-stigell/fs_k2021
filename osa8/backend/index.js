@@ -85,17 +85,17 @@ const resolvers = {
     allBooks: async (root, args) => {
       if (args.author && args.genre) {
         const author = await Author.findOne({ name: args.author })
-        const booksFound = await Book.find({ author: author._id })
+        const booksFound = await Book.find({ author: author._id }).populate('author')
         return booksFound.filter(book => book.genres.includes(args.genre))
       } else if (args.author) {
         const author = await Author.findOne({ name: args.author })
-        const books = await Book.find({ author: author._id })
+        const books = await Book.find({ author: author._id }).populate('author')
         return books
       } else if (args.genre) {
-        const books = await Book.find({})
+        const books = await Book.find({}).populate('author')
         return books.filter(book => book.genres.includes(args.genre))
       } else {
-        const books = await Book.find({})
+        const books = await Book.find({}).populate('author')
         return books
       }
     },
@@ -139,7 +139,7 @@ const resolvers = {
       }
     },
     editAuthor: async (root, args, context) => {
-      
+
       if (!context.currentUser) {
         throw new UserInputError("wrong credentials")
       }

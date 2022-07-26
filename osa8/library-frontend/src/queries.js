@@ -4,7 +4,9 @@ const queryBooks = gql`
 query {
   allBooks {
     title
-    author
+    author {
+      name
+    }
     published
   }
 }
