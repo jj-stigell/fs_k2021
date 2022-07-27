@@ -8,6 +8,7 @@ query {
       name
     }
     published
+    genres
   }
 }
 `
@@ -18,6 +19,15 @@ query {
     name
     born
     bookCount
+  }
+}
+`
+
+const meInfo = gql`
+query {
+  me {
+    username
+    favouriteGenre
   }
 }
 `
@@ -63,4 +73,4 @@ mutation login($username: String!, $password: String!) {
 }
 ` 
 
-export { queryBooks, queryAuthors, newBook, setYearBorn, loginUser }
+export { queryBooks, queryAuthors, meInfo, newBook, setYearBorn, loginUser }
