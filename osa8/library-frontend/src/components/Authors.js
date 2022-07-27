@@ -5,6 +5,7 @@ import { useState } from 'react'
 const Authors = () => {
   const queryResult = useQuery(queryAuthors)
   const [ authorName, setName ] = useState('')
+  const [ bornIn, setBorn ] = useState('')
   const [ mutateBirthyear ] = useMutation(setYearBorn, {
     refetchQueries: [ { query: queryAuthors } ]
   })
@@ -16,8 +17,10 @@ const Authors = () => {
   const setYear = async (event) => {
     event.preventDefault()
     const name = authorName
-    const born = parseInt(event.target.born.value)
+    const born = parseInt(bornIn)
     mutateBirthyear({ variables: { name, born } })
+    setBorn('')
+    setName('')
   }
 
   if (queryResult.loading) {
@@ -47,13 +50,16 @@ const Authors = () => {
       <form onSubmit={setYear}>
         <label>name: 
           <select value={authorName} onChange={handleChange}>
+          <option key='empty' value=''></option>
             {queryResult.data.allAuthors.map((a) => (
               <option key={a.name} value={a.name}>{a.name}</option>
             ))}
           </select>
         </label>
         <br />
-        <label>born: <input name="born" /></label>
+        <label>born:
+          <input value={bornIn} onChange={({ target }) => setBorn(target.value)} />
+        </label>
         <br />
         <button type="submit">update author</button>
       </form>

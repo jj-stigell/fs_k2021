@@ -117,25 +117,25 @@ const resolvers = {
 
       const author = await Author.findOne({ name: args.author })
       if (author) {
-        try {
-          const book = new Book({ ...args, author: author._id })
-          return (await book.save()).populate('author')
-        } catch (error) {
-          throw new UserInputError(error.message, {
-            invalidArgs: args,
+        const book = new Book({ ...args, author: author._id })
+        return (await book.save())
+          .populate('author')
+          .catch(error => {
+            throw new UserInputError(error.message, {
+              invalidArgs: args,
+            })
           })
-        }
       } else {
-        try {
-          const newAuthor = new Author({ name: args.author, born: null })
-          newAuthor.save()
-          const book = new Book({ ...args, author: newAuthor._id })
-          return (await book.save()).populate('author')
-        } catch (error) {
-          throw new UserInputError(error.message, {
-            invalidArgs: args,
+        const newAuthor = new Author({ name: args.author, born: null })
+        newAuthor.save()
+        const book = new Book({ ...args, author: newAuthor._id })
+        return (await book.save())
+          .populate('author')
+          .catch(error => {
+            throw new UserInputError(error.message, {
+              invalidArgs: args,
+            })
           })
-        }
       }
     },
     editAuthor: async (root, args, context) => {

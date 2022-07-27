@@ -13,6 +13,21 @@ query {
 }
 `
 
+const queryBooksWithGenre = gql`
+query allBooks($genre: String!) {
+  allBooks(
+    genre: $genre
+  ) {
+    title
+    author {
+      name
+    }
+    published
+    genres
+  }
+}
+`
+
 const queryAuthors = gql`
 query {
   allAuthors {
@@ -23,7 +38,7 @@ query {
 }
 `
 
-const meInfo = gql`
+const getUser = gql`
 query {
   me {
     username
@@ -73,4 +88,4 @@ mutation login($username: String!, $password: String!) {
 }
 ` 
 
-export { queryBooks, queryAuthors, meInfo, newBook, setYearBorn, loginUser }
+export { queryBooks, queryBooksWithGenre, queryAuthors, getUser, newBook, setYearBorn, loginUser }

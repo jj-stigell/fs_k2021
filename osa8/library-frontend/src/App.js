@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useApolloClient } from '@apollo/client';
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -10,6 +10,13 @@ import Recommend from "./components/Recommend";
 const App = () => {
   const [ token, setToken ] = useState(null)
   const client = useApolloClient()
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('library-user-token')
+    if (token) {
+      setToken(token)
+    }
+  }, [])
 
   const handleLogout = () => {
     setToken(null)
