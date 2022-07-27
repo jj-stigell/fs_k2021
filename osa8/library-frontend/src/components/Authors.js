@@ -2,9 +2,9 @@ import { useQuery, useMutation } from '@apollo/client'
 import { queryAuthors, setYearBorn } from '../queries'
 import { useState } from 'react'
 
-const Authors = (props) => {
+const Authors = () => {
   const queryResult = useQuery(queryAuthors)
-  const [authorName, setName] = useState('')
+  const [ authorName, setName ] = useState('')
   const [ mutateBirthyear ] = useMutation(setYearBorn, {
     refetchQueries: [ { query: queryAuthors } ]
   })
@@ -22,10 +22,6 @@ const Authors = (props) => {
 
   if (queryResult.loading) {
     return <div>loading...</div>
-  }
-
-  if (!props.show) {
-    return null
   }
   
   return (
