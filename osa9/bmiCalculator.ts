@@ -34,7 +34,7 @@ const calculateBmi = (height: number, mass: number) : string => {
     return 'Obese (Class I)';
   } else if (BMI > 34.9 && BMI <= 39.9) {
     return 'Obese (Class II)';
-  } else if (BMI > 39.9) {
+  } else {
     return 'Obese (Class III)';
   }
 }
@@ -50,4 +50,5 @@ try {
   console.log(errorMessage);
 }
 
+export default calculateBmi
 // run with command: npm run calculateBmi 'height' 'mass'
