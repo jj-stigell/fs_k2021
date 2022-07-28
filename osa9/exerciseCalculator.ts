@@ -8,6 +8,26 @@ interface Result {
   average: number
 }
 
+interface inputValues {
+  dailyExercise: Array<number>,
+  target: number
+}
+
+const parseArgs = (args: Array<string>): inputValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  const dailyExercise = args.slice(3).map(hours => Number(hours));
+  const target = Number(args[2]);
+
+  if (!isNaN(target) && dailyExercise.every(hours => !isNaN(hours))) {
+    return {
+      dailyExercise,
+      target
+    }
+  } else {
+    throw new Error('Provided values are invalid!');
+  };
+}
+
 const calculateExercises = (dailyExercise: Array<number>, target: number) : Result => {
   const periodLength: number = dailyExercise.length;
   const trainingDays: number = dailyExercise.filter(day => day !== 0).length;
@@ -40,5 +60,15 @@ const calculateExercises = (dailyExercise: Array<number>, target: number) : Resu
   };
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
-// run with command: npm run calculateExercises
+try {
+  const { dailyExercise, target } = parseArgs(process.argv);
+  console.log(calculateExercises(dailyExercise, target));
+} catch (error: unknown) {
+  let errorMessage = 'Error happened.'
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  };
+  console.log(errorMessage);
+}
+
+// run with command: npm run calculateExercises 'target: number' 'hours per day: array<number>'
