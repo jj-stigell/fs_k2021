@@ -13,4 +13,9 @@ const getPatients = (): NonSensitivePatient[] => {
   }));
 };
 
-export default { getPatients };
+const addPatient = (newPatient: Patient): Patient => {
+  patients.push(newPatient);
+  return newPatient;
+};
+
+export default { getPatients, addPatient };
