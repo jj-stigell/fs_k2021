@@ -22,24 +22,24 @@ const parseArgs = (args: Array<string>): inputValues => {
     return {
       dailyExercise,
       target
-    }
+    };
   } else {
     throw new Error('Provided values are invalid!');
-  };
-}
+  }
+};
 
 const calculateExercises = (dailyExercise: Array<number>, target: number) : Result => {
   const periodLength: number = dailyExercise.length;
   const trainingDays: number = dailyExercise.filter(day => day !== 0).length;
   const success: boolean = dailyExercise.every(day => day >= target);
-  const initialValue: number = 0;
+  const initialValue = 0;
   const sum = dailyExercise.reduce(
     (previousValue, currentValue) => previousValue + currentValue,
     initialValue
   );
   const average = sum / periodLength;
-  let rating: number = 1;
-  let ratingDescription = 'Miserable';
+  let rating = 1;
+  let ratingDescription = 'bad';
 
   if (success) {
     rating = 3;
@@ -47,7 +47,7 @@ const calculateExercises = (dailyExercise: Array<number>, target: number) : Resu
   } else if (average <= target && average >= (target / 2)) {
     rating = 2;
     ratingDescription = 'not too bad but could be better';
-  };
+  }
 
   return {
     periodLength,
@@ -58,17 +58,18 @@ const calculateExercises = (dailyExercise: Array<number>, target: number) : Resu
     target,
     average,
   };
-}
+};
 
 try {
   const { dailyExercise, target } = parseArgs(process.argv);
   console.log(calculateExercises(dailyExercise, target));
 } catch (error: unknown) {
-  let errorMessage = 'Error happened.'
+  let errorMessage = 'Error happened.';
   if (error instanceof Error) {
     errorMessage += ' Error: ' + error.message;
-  };
+  }
   console.log(errorMessage);
 }
 
+export default calculateExercises;
 // run with command: npm run calculateExercises 'target: number' 'hours per day: array<number>'

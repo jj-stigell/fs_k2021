@@ -11,11 +11,11 @@ const parseArguments = (args: Array<string>): Bodyinfo => {
     return {
       height: Number(args[2]),
       mass: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
-  };
-}
+  }
+};
 
 const calculateBmi = (height: number, mass: number) : string => {
   const BMI: number = mass / ((height * height) / 10000);
@@ -37,18 +37,18 @@ const calculateBmi = (height: number, mass: number) : string => {
   } else {
     return 'Obese (Class III)';
   }
-}
+};
 
 try {
   const { height, mass } = parseArguments(process.argv);
   console.log(calculateBmi(height, mass));
 } catch (error: unknown) {
-  let errorMessage = 'Error happened.'
+  let errorMessage = 'Error happened.';
   if (error instanceof Error) {
     errorMessage += ' Error: ' + error.message;
-  };
+  }
   console.log(errorMessage);
 }
 
-export default calculateBmi
+export default calculateBmi;
 // run with command: npm run calculateBmi 'height' 'mass'
