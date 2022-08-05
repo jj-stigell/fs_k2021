@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-import { Patient } from "../types";
+import { Entry, Patient } from "../types";
 import { useStateValue, setPatient } from "../state";
 import { apiBaseUrl } from "../constants";
 
@@ -29,6 +29,17 @@ const ShowPatient = () => {
       <h2>{patient.name} (gender: {patient.gender})</h2>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
+      <h3>entries</h3>
+      {Object.values(patient.entries).map((entry: Entry) => (
+        <div key={entry.id}>
+          <p>{entry.date} {entry.description}</p>
+          <ul>
+          {entry.diagnosisCodes?.map((code) => (
+            <li key={code}>{code}</li>
+          ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };

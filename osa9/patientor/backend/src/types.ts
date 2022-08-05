@@ -31,7 +31,6 @@ export interface BaseEntry {
   date: string;
   type: string;
   specialist: string;
-  
   description: string;
 }
 
@@ -53,6 +52,7 @@ export interface OccupationalHealthcareEntry extends BaseEntry {
 }
 
 export interface HealthCheckEntry extends BaseEntry {
+  diagnosisCodes?: Array<string>;
   healthCheckRating: number;
 }
 

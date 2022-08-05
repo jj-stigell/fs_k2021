@@ -14,7 +14,8 @@ const initialState: State = {
     name: "",
     id: "",
     occupation: "",
-    gender: Gender.Other
+    gender: Gender.Other,
+    entries: []
   }
 };
 
