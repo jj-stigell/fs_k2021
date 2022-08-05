@@ -21,10 +21,11 @@ export interface BaseEntry {
   type: string;
   specialist: string;
   description: string;
+  diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
 export interface HospitalEntry extends BaseEntry {
-  diagnosisCodes: Array<string>;
+  type: "Hospital";
   discharge: {
     date: string;
     criteria: string;
@@ -32,7 +33,7 @@ export interface HospitalEntry extends BaseEntry {
 }
 
 export interface OccupationalHealthcareEntry extends BaseEntry {
-  diagnosisCodes?: Array<string>;
+  type: "OccupationalHealthcare";
   employerName: string;
   sickLeave?: {
     startDate: string;
@@ -41,7 +42,7 @@ export interface OccupationalHealthcareEntry extends BaseEntry {
 }
 
 export interface HealthCheckEntry extends BaseEntry {
-  diagnosisCodes: Array<string>;
+  type: "HealthCheck";
   healthCheckRating: number;
 }
 

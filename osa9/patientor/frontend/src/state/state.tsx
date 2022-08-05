@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Gender, Patient } from "../types";
-
+import { Gender, Patient, Diagnosis } from "../types";
 import { Action } from "./reducer";
 
 export type State = {
   patients: { [id: string]: Patient };
   patient: Patient;
+  diagnosis: { [code: string]: Diagnosis }
 };
 
 const initialState: State = {
@@ -16,7 +16,8 @@ const initialState: State = {
     occupation: "",
     gender: Gender.Other,
     entries: []
-  }
+  },
+  diagnosis: {}
 };
 
 export const setPatientList = (patientList: Patient[]): Action => {
@@ -37,6 +38,13 @@ export const setPatient = (patient: Patient): Action => {
   return {
     type: 'SET_PATIENT',
     payload: patient
+  };
+};
+
+export const setDiagnosisList = (diagnosisList: Diagnosis[]): Action => {
+  return {
+    type: 'SET_DIAGNOSIS_LIST',
+    payload: diagnosisList
   };
 };
 

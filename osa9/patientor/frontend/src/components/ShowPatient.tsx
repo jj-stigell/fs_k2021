@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Entry, Patient } from "../types";
 import { useStateValue, setPatient } from "../state";
 import { apiBaseUrl } from "../constants";
+import EntryDetails from "./EntryDetails";
 
 const ShowPatient = () => {
   const [{ patient }, dispatch] = useStateValue();
@@ -31,14 +32,7 @@ const ShowPatient = () => {
       <p>occupation: {patient.occupation}</p>
       <h3>entries</h3>
       {Object.values(patient.entries).map((entry: Entry) => (
-        <div key={entry.id}>
-          <p>{entry.date} {entry.description}</p>
-          <ul>
-          {entry.diagnosisCodes?.map((code) => (
-            <li key={code}>{code}</li>
-          ))}
-          </ul>
-        </div>
+        <EntryDetails key={entry.id} entry={entry} />
       ))}
     </div>
   );

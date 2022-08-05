@@ -14,7 +14,7 @@ const patients: Patient[] = [
         date: '2015-01-02',
         type: 'Hospital',
         specialist: 'MD House',
-        diagnosisCodes: ['S62.5'],
+        diagnosisCodes: ['S62.5', 'J10.1', 'N30.0'],
         description:
           "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
         discharge: {
