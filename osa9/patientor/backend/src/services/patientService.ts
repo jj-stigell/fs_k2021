@@ -1,4 +1,4 @@
-import patientsData from '../data/patients.json';
+import patientsData from '../data/patients';
 import { Patient, NonSensitivePatient } from '../types';
 
 const patients: Array<Patient> = patientsData as Array<Patient>;
