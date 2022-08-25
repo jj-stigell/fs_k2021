@@ -1,0 +1,99 @@
+Script started on Sat Aug 20 22:58:54 2022
+[1m[7m%[27m[1m[0m                                                                                                                                                    ]7;file://stigu.local/Users/---/Downloads/containers_application/part12-containers-applications/todo-app/todo-backend[0m[27m[24m[---@stigu todo-backend % [K[?2004hexitdocker exec -it todo-backend_mongo_1 bash[?2004l
+root@3d396d912acf:/# [Kroot@3d396d912acf:/# mongo
+MongoDB shell version v5.0.11
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("afe4d316-af10-40df-99ea-79b73568d8a9") }
+MongoDB server version: 5.0.11
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+	https://community.mongodb.com
+> sho dbs[3G[Jsho dbs[9G[3G[Jsho dbs[8G[3G[Jsho dbs[7G[3G[Jsho dbs[6G[3G[Jshow dbs[7G[3G[Jshow dbs[11G
+> [3G[Jshow dbs[11G -u root -p example[3G[Jshow dbs -u root -p example[30G
+> use the_database[3G[Juse the_database[19G
+switched to db the_database
+> [3G[Juse the_database[19G[3G[Jshow dbs -u root -p example[30G[3G[Jshow dbs -u root -p example[30G
+> show collections[3G[Jshow collections[19G
+Warning: unable to run listCollections, attempting to approximate collection names by parsing connectionStatus
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "command find requires authentication",
+	"code" : 13,
+	"codeName" : "Unauthorized"
+}
+> [3G[Jdb.todos.find({})[20G -u root -p example[3G[Jdb.todos.find({}) -u root -p example[39G
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:21
+> exit[3G[Jexit[7G
+bye
+root@3d396d912acf:/# mongo[1Pexitmongo -u root -p example
+MongoDB shell version v5.0.11
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("058684a6-7b82-4a6a-b5bf-acd5bedd36ab") }
+MongoDB server version: 5.0.11
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting: 
+        2022-08-20T13:56:48.600+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> [3G[Jdb.todos.find({}) -u root -p example[39G[3G[Jdb.todos.find({})[20G[3G[Jshow collections[19G[3G[Jshow dbs -u root -p example[30G[3G[Juse the_database[19G[3G[Jshow dbs -u root -p example[30G[3G[Jshow dbs[11G[3G[Jshow dbs[11G
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> [3G[Jshow dbs[11G[3G[Jdb.todos.find({}) -u root -p example[39G[3G[Jdb.todos.find({})[20G[3G[Jshow collections[19G[3G[Jshow dbs -u root -p example[30G[3G[Juse the_database[19G[3G[Jshow dbs -u root -p example[30G[3G[Jshow dbs[11G[3G[Jshow dbs -u root -p example[30G[3G[Juse the_database[19G[3G[Juse the_database[19G
+switched to db the_database
+> [3G[Juse the_database[19G[3G[Jshow dbs[11G[3G[Jdb.todos.find({}) -u root -p example[39G[3G[Jdb.todos.find({})[20G[3G[Jshow collections[19G[3G[Jshow dbs -u root -p example[30G[3G[Jshow collections[19G[3G[Jshow collections[19G
+todos
+> [3G[Jshow collections[19G[3G[Juse the_database[19G[3G[Jshow dbs[11G[3G[Jdb.todos.find({}) -u root -p example[39G[3G[Jdb.todos.find({})[20G[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("6300a0f35357d76b9947c9b8"), "text" : "this is true", "done" : true }
+{ "_id" : ObjectId("6300a0f35357d76b9947c9b9"), "text" : "Learn about containers", "done" : false }
+> db.products.insertOne( { item: "card", qty: 15 } )[3G[Jdb.products.insertOne[1;34m([0m { item: "card", qty: 15 } )[52G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[51G[3G[Jdb.products.insertOne( [1;34m{[0m item: "card", qty: 15 } )[50G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[49G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[48G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[47G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[46G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[45G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[44G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[43G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[42G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[41G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[40G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[39G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[38G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[37G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[36G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[35G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[34G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[33G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[32G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[31G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[30G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[29G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[28G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[27G[3G[Jdb.products.insertOne( { item: "card", qty: 15 [1;34m}[0m )[26G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[25G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } [1;34m)[0m[24G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[23G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[22G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[21G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[20G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[19G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[18G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[17G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[16G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[15G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[14G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[13G[3G[Jdb.products.insertOne( { item: "card", qty: 15 } )[14G[3G[Jdb.product.insertOne( { item: "card", qty: 15 } )[13G[3G[Jdb.produc.insertOne( { item: "card", qty: 15 } )[12G[3G[Jdb.produ.insertOne( { item: "card", qty: 15 } )[11G[3G[Jdb.prod.insertOne( { item: "card", qty: 15 } )[10G[3G[Jdb.pro.insertOne( { item: "card", qty: 15 } )[9G[3G[Jdb.pr.insertOne( { item: "card", qty: 15 } )[8G[3G[Jdb.p.insertOne( { item: "card", qty: 15 } )[7G[3G[Jdb..insertOne( { item: "card", qty: 15 } )[6G[3G[Jdb.t.insertOne( { item: "card", qty: 15 } )[7G[3G[Jdb.to.insertOne( { item: "card", qty: 15 } )[8G[3G[Jdb.tod.insertOne( { item: "card", qty: 15 } )[9G[3G[Jdb.todo.insertOne( { item: "card", qty: 15 } )[10G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[11G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[12G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[13G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[14G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[15G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[16G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[17G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[18G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[19G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[20G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } [1;34m)[0m[21G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[22G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 [1;34m}[0m )[23G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[24G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[25G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[26G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[27G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[28G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[29G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[30G[3G[Jdb.todos.insertOne( { item: "card", qty: 15 } )[29G[3G[Jdb.todos.insertOne( { ite: "card", qty: 15 } )[28G[3G[Jdb.todos.insertOne( { it: "card", qty: 15 } )[27G[3G[Jdb.todos.insertOne( { i: "card", qty: 15 } )[26G[3G[Jdb.todos.insertOne( { : "card", qty: 15 } )[25G[3G[Jdb.todos.insertOne( { t: "card", qty: 15 } )[26G[3G[Jdb.todos.insertOne( { te: "card", qty: 15 } )[27G[3G[Jdb.todos.insertOne( { tex: "card", qty: 15 } )[28G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[29G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[30G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[31G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[32G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[33G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[34G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[35G[3G[Jdb.todos.insertOne( { text: "card", qty: 15 } )[36G[3G[Jdb.todos.insertOne( { text: "car", qty: 15 } )[35G[3G[Jdb.todos.insertOne( { text: "ca", qty: 15 } )[34G[3G[Jdb.todos.insertOne( { text: "c", qty: 15 } )[33G[3G[Jdb.todos.insertOne( { text: "", qty: 15 } )[32G[3G[Jdb.todos.insertOne( { text: "I", qty: 15 } )[33G[3G[Jdb.todos.insertOne( { text: "In", qty: 15 } )[34G[3G[Jdb.todos.insertOne( { text: "Inc", qty: 15 } )[35G[3G[Jdb.todos.insertOne( { text: "Incr", qty: 15 } )[36G[3G[Jdb.todos.insertOne( { text: "Incre", qty: 15 } )[37G[3G[Jdb.todos.insertOne( { text: "Increa", qty: 15 } )[38G[3G[Jdb.todos.insertOne( { text: "Increas", qty: 15 } )[39G[3G[Jdb.todos.insertOne( { text: "Increase", qty: 15 } )[40G[3G[Jdb.todos.insertOne( { text: "Increase ", qty: 15 } )[41G[3G[Jdb.todos.insertOne( { text: "Increase t", qty: 15 } )[42G[3G[Jdb.todos.insertOne( { text: "Increase th", qty: 15 } )[43G[3G[Jdb.todos.insertOne( { text: "Increase the", qty: 15 } )[44G[3G[Jdb.todos.insertOne( { text: "Increase the ", qty: 15 } )[45G[3G[Jdb.todos.insertOne( { text: "Increase the n", qty: 15 } )[46G[3G[Jdb.todos.insertOne( { text: "Increase the nu", qty: 15 } )[47G[3G[Jdb.todos.insertOne( { text: "Increase the num", qty: 15 } )[48G[3G[Jdb.todos.insertOne( { text: "Increase the numb", qty: 15 } )[49G[3G[Jdb.todos.insertOne( { text: "Increase the numbe", qty: 15 } )[50G[3G[Jdb.todos.insertOne( { text: "Increase the number", qty: 15 } )[51G[3G[Jdb.todos.insertOne( { text: "Increase the number ", qty: 15 } )[52G[3G[Jdb.todos.insertOne( { text: "Increase the number o", qty: 15 } )[53G[3G[Jdb.todos.insertOne( { text: "Increase the number of", qty: 15 } )[54G[3G[Jdb.todos.insertOne( { text: "Increase the number of ", qty: 15 } )[55G[3G[Jdb.todos.insertOne( { text: "Increase the number of t", qty: 15 } )[56G[3G[Jdb.todos.insertOne( { text: "Increase the number of to", qty: 15 } )[57G[3G[Jdb.todos.insertOne( { text: "Increase the number of too", qty: 15 } )[58G[3G[Jdb.todos.insertOne( { text: "Increase the number of tool", qty: 15 } )[59G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools", qty: 15 } )[60G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools ", qty: 15 } )[61G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools i", qty: 15 } )[62G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in", qty: 15 } )[63G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in ", qty: 15 } )[64G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in m", qty: 15 } )[65G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my", qty: 15 } )[66G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my ", qty: 15 } )[67G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my t", qty: 15 } )[68G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my to", qty: 15 } )[69G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my too", qty: 15 } )[70G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my tool", qty: 15 } )[71G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolb", qty: 15 } )[72G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbe", qty: 15 } )[73G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbel", qty: 15 } )[74G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[75G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[76G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[77G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[78G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[79G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[80G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qty: 15 } )[81G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", qt: 15 } )[80G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", q: 15 } )[79G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", : 15 } )[78G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", s: 15 } )[79G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", so: 15 } )[80G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", son: 15 } )[81G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", sone: 15 } )[82G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", son: 15 } )[81G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", so: 15 } )[80G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", s: 15 } )[79G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", : 15 } )[78G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", d: 15 } )[79G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", do: 15 } )[80G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", don: 15 } )[81G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 15 } )[82G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 15 } )[83G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 15 } )[84G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 15 } )[85G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 15 } )[86G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: 1 } )[85G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done:  } )[84G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: f } )[85G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: fa } )[86G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: fal } )[87G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: fals } )[88G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: false } )[89G[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: false } )[93G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6300ea2d43c08ef18e931edf")
+}
+> [3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: false } )[93G[3G[Jdb.todos.find({})[20G[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("6300a0f35357d76b9947c9b8"), "text" : "this is true", "done" : true }
+{ "_id" : ObjectId("6300a0f35357d76b9947c9b9"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("6300ea2d43c08ef18e931edf"), "text" : "Increase the number of tools in my toolbelt", "done" : false }
+> [3G[J[3G^C
+bye
+root@3d396d912acf:/# exit
+exit
+[1m[7m%[27m[1m[0m                                                                                                                                                    ]7;file://stigu.local/Users/---/Downloads/containers_application/part12-containers-applications/todo-app/todo-backend[0m[27m[24m[---@stigu todo-backend % [K[?2004heexit[?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sat Aug 20 23:08:00 2022

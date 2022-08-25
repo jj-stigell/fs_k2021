@@ -1,2 +1,2 @@
-# fullstack_kurssi_2022
-Full Stack open 2022 kurssi tehtävät
+# Full Stack Open
+[Full Stack open 2022](https://fullstackopen.com/en/) course assignments
